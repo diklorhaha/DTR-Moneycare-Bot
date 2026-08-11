@@ -1,0 +1,14 @@
+[Unit]
+Description=ticket-yoomoney Discord bot
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ticket-yoomoney-bot
+ExecStart=/opt/ticket-yoomoney-bot/.venv/bin/python -m bot.main
+Restart=always
+RestartSec=5
+EnvironmentFile=/opt/ticket-yoomoney-bot/.env
+
+[Install]
+WantedBy=multi-user.target
