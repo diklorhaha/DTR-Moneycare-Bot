@@ -5,8 +5,8 @@ Discord-бот для тикетов Ticket Tool + оплата через ЮMon
 ## Что делает
 
 1. Ждёт канал `ticket-*`
-2. Читает из embed Ticket Tool поле **Сумму валюты для покупки:**
-3. Считает рубли: `валюту / ROBUX_RATE`
+2. Читает из embed Ticket Tool поле **Сумма робуксов для покупки:**
+3. Считает рубли: `робуксы / ROBUX_RATE`
 4. Шлёт ссылку на оплату ЮMoney
 5. Ждёт оплату (опрос истории + опционально webhook)
 6. При успехе — сообщение покупателю; при таймауте — закрывает тикет
@@ -73,3 +73,26 @@ YOOMONEY_WEBHOOK_PORT=8080
 pytest
 ruff check .
 ```
+
+## Деплой на Amvera
+
+1. В корне уже есть `amvera.yml` (Python 3.11, старт: `python -m bot.main`).
+2. Секреты **не** клади в git — добавь их в Amvera → **Переменные** (как в `.env.example`):
+   - `DISCORD_BOT_TOKEN`
+   - `YOOMONEY_WALLET`
+   - `YOOMONEY_ACCESS_TOKEN`
+   - `ROBUX_RATE`
+   - остальное по желанию
+3. Залей код в git Amvera (из скрина):
+
+```bash
+cd C:\Users\Бебрик\Projects\ticket-yoomoney-bot
+git add .
+git commit -m "feat: ticket yoomoney discord bot"
+git remote add amvera https://git.msk0.amvera.ru/dtrshop/dtr-moneycare
+git push -u amvera master
+```
+
+Логин/пароль или токен — те, что даёт Amvera для своего git. После push проект соберётся и запустит бота.
+
+Webhook ЮMoney на Amvera нужен только если включишь `YOOMONEY_WEBHOOK_ENABLED=true` (тогда понадобится публичный URL и порт в настройках приложения). По умолчанию хватает поллинга оплаты — webhook не обязателен.

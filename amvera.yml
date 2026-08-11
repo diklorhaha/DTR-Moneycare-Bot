@@ -1,0 +1,13 @@
+meta:
+  environment: python
+  toolchain:
+    name: pip
+    version: "3.11"
+
+build:
+  requirementsPath: requirements.txt
+
+run:
+  command: python -m bot.main
+  # Amvera проксирует свой https-домен на этот порт
+  containerPort: 80
